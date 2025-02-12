@@ -54,7 +54,7 @@
 
     - name: Copy Salesnumbers file
       ansible.builtin.copy:
-        src: "{{ __salesnumbers.path }}"
+        src: "{{ __salesnumbers.files[0].path }}"
         dest: /team/Sales/Salesnumbers
 
     - name: Set first line in file
