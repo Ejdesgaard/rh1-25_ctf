@@ -28,6 +28,12 @@
     passwd: "@#FD12"
 
   tasks:
+    - name: Create groups
+      ansible.builtin.group:
+        name: "{{ item.group }}"
+        state: present
+      loop: "{{ users }}"
+
     - name: Create users
       ansible.builtin.user:
         name: "{{ item.name }}"
