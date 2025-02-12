@@ -36,6 +36,7 @@
         owner: ctf_sa
         group: "{{ item.group }}" 
         mode: '0660'
+        recurse: true
       loop: "{{ users }}"
 
     - name: Find Salesnumbers file
