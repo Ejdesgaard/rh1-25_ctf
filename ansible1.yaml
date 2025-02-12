@@ -1,5 +1,6 @@
 - name: Users and groups
-  hosts: server2.ms8b6.sandbox4667.opentlc.com
+#  hosts: server2.ms8b6.sandbox4667.opentlc.com
+  hosts: server2 
 
   vars:
     users:
