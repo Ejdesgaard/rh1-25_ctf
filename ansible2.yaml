@@ -41,9 +41,24 @@
         recurse: true
       loop: "{{ users }}"
 
+    - name: folder
+      ansible.builtin.file:
+        path: /it
+        owner: ctf_sa
+        group: ctf_sa
+        mode: '0660'
+        recurse: true
+
     - name: touch Salesnumbers
       ansible.builtin.file:
         path: /team/Sales/Salesnumbers
+        state: touch
+        owner: ctf_sa
+        group: Sales
+
+    - name: touch Salesnumbers
+      ansible.builtin.file:
+        path: /it/tasks.done
         state: touch
         owner: ctf_sa
         group: Sales
