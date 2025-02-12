@@ -30,12 +30,6 @@
     passwd: "@#FD12"
 
   tasks:
-    - name: Find Salesnumbers file
-      ansible.builtin.find:
-        file_type: file
-        patterns: 'Salesnumbers'
-      register: __salesnumbers
-
     - name: Create team folders
       ansible.builtin.file:
         path: "/team/{{ item.group }}"
@@ -43,6 +37,13 @@
         group: "{{ item.group }}" 
         mode: '0660'
       loop: "{{ users }}"
+
+    - name: Find Salesnumbers file
+      ansible.builtin.find:
+        file_type: file
+        patterns: 'Salesnumbers'
+        paths: "/"
+      register: __salesnumbers
 
     - name: Copy Salesnumbers file
       ansible.builtin.copy:
