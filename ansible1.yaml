@@ -1,0 +1,43 @@
+- name: Users and groups
+  hosts: server2.ms8b6.sandbox4667.opentlc.com
+
+  vars:
+    users:
+      - name: Annabelle
+        group: Sales
+      - name: Bob
+        group: IT
+      - name: Carl
+        group: Support
+      - name: Dyson
+        group: Support
+      - name: Evert
+        group: IT
+      - name: Frank
+        group: Sales
+      - name: Gerry
+        group: Support
+      - name: Harold
+        group: IT
+      - name: Isabella
+        group: Services
+      - name: Jameson
+        group: Services
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFN90Xtfjxqs2ZpO0VqR1jr92mJiTx3IaEl/F+LiOZJK"
+    passwd: "@#FD12"
+
+  tasks:
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        group: "{{ item.group }}"
+        state: present
+        password: "{{ passwd }}"
+      loop: "{{ users }}"
+
+    - name: Set ssh key
+      ansible.posix.authorized_key:
+        user: "{{ item.name }}"
+        key: "{{ ssh_key }}"
+        state: present
+      loop: "{{ users }}"
