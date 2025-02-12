@@ -2,6 +2,9 @@
 #  hosts: server2.ms8b6.sandbox4667.opentlc.com
   hosts: server2 
 
+  become: true
+  become_method: sudo
+
   vars:
     users:
       - name: Annabelle
