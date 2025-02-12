@@ -47,10 +47,14 @@
         patterns: 'Salesnumbers'
         paths: "/"
       register: __salesnumbers
+    
+    - name: debug
+      ansible.builtin.debug:
+        msg: "{{ __salesnumbers }}"
 
     - name: Copy Salesnumbers file
       ansible.builtin.copy:
-        src: "{{ __salesnumbers }}"
+        src: "{{ __salesnumbers.path }}"
         dest: /team/Sales/Salesnumbers
 
     - name: Set first line in file
