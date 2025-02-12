@@ -41,21 +41,13 @@
         recurse: true
       loop: "{{ users }}"
 
-    - name: Find Salesnumbers file
-      ansible.builtin.find:
-        file_type: file
-        patterns: 'Salesnumbers'
-        paths: "/"
-      register: __salesnumbers
-    
-    - name: debug
-      ansible.builtin.debug:
-        msg: "{{ __salesnumbers }}"
+    - name: touch Salesnumbers
+      ansible.builtin.file:
+        path: /team/Sales/Salesnumbers
+        state: touch
+        owner: ctf_sa
+        group: Sales
 
-    - name: Copy Salesnumbers file
-      ansible.builtin.copy:
-        src: "{{ __salesnumbers.files[0].path }}"
-        dest: /team/Sales/Salesnumbers
 
     - name: Set first line in file
       ansible.builtin.lineinfile:
