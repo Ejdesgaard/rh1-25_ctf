@@ -32,7 +32,7 @@
         name: "{{ item.name }}"
         group: "{{ item.group }}"
         state: present
-        password: "{{ passwd }}"
+        password: "{{ passwd | password_hash }}"
       loop: "{{ users }}"
 
     - name: Set ssh key
