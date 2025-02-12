@@ -1,0 +1,56 @@
+- name: Users and groups
+  hosts: server2 
+
+  become: true
+  become_method: sudo
+
+  vars:
+    users:
+      - name: Annabelle
+        group: Sales
+      - name: Bob
+        group: IT
+      - name: Carl
+        group: Support
+      - name: Dyson
+        group: Support
+      - name: Evert
+        group: IT
+      - name: Frank
+        group: Sales
+      - name: Gerry
+        group: Support
+      - name: Harold
+        group: IT
+      - name: Isabella
+        group: Services
+      - name: Jameson
+        group: Services
+    ssh_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFN90Xtfjxqs2ZpO0VqR1jr92mJiTx3IaEl/F+LiOZJK"
+    passwd: "@#FD12"
+
+  tasks:
+    - name: Find Salesnumbers file
+      ansible.builtin.find:
+        file_type: file
+        patterns: 'Salesnumbers'
+      register: __salesnumbers
+
+    - name: Create team folders
+      ansible.builtin.file:
+        path: "/team/{{ item.group }}"
+        owner: ctf_sa
+        group: "{{ item.group }}" 
+        mode: '0660'
+      loop: "{{ users }}"
+
+    - name: Copy Salesnumbers file
+      ansible.builtin.copy:
+        src: "{{ __salesnumbers }}"
+        dest: /team/Sales/Salesnumbers
+
+    - name: Set first line in file
+      ansible.builtin.lineinfile:
+        path: /it/tasks.done
+        insertbefore: BOF
+        line: "all folders are set"
